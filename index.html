@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="es" class="h-full">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pingu AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="h-full bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 flex flex-col transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
+
+  <!-- Barra Superior Empresarial -->
+  <header class="sticky top-0 z-20 h-16 shrink-0 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md px-4 sm:px-8 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl overflow-hidden flex items-center justify-center shadow-xs shrink-0">
+        <svg class="w-9 h-9" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" rx="16" fill="#18181B"/>
+          <path d="M32 12C22.611 12 15 19.611 15 29V46C15 49.314 17.686 52 21 52H43C46.314 52 49 49.314 49 46V29C49 19.611 41.389 12 32 12Z" fill="#27272A" stroke="#F4F4F5" stroke-width="2.5"/>
+          <path d="M32 25C25.925 25 21 29.925 21 36V48C21 50.209 22.791 52 25 52H39C41.209 52 43 50.209 43 48V36C43 29.925 38.075 25 32 25Z" fill="#FAFAFA"/>
+          <circle cx="26.5" cy="22" r="2.2" fill="#FAFAFA"/>
+          <circle cx="37.5" cy="22" r="2.2" fill="#FAFAFA"/>
+          <path d="M28.5 25.5H35.5L32 30.5L28.5 25.5Z" fill="#F59E0B"/>
+        </svg>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-semibold text-sm sm:text-base tracking-tight text-zinc-900 dark:text-zinc-100">
+            Pingu AI
+          </h1>
+        </div>
+        <div class="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span id="active-role-badge" class="font-medium text-zinc-700 dark:text-zinc-300">Especialista Tech</span>
+          <span>·</span>
+          <span id="active-temp-badge" class="font-mono text-[11px]">Temp 0.2</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones de Cabecera -->
+    <div class="flex items-center gap-2">
+      <!-- Botón de Ajustes IA -->
+      <button
+        id="open-settings"
+        type="button"
+        title="Configurar System Prompt y Temperatura"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-700 dark:text-zinc-200 bg-zinc-100/80 dark:bg-zinc-800/80 hover:bg-zinc-200/70 dark:hover:bg-zinc-700/80 border border-zinc-200/80 dark:border-zinc-700/80 transition-all cursor-pointer"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+        </svg>
+        <span>Ajustes IA</span>
+      </button>
+
+      <!-- Botón Nueva Sesión -->
+      <button
+        id="clear-chat"
+        type="button"
+        title="Iniciar nueva conversación"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700 transition-all cursor-pointer"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        <span class="hidden sm:inline">Nueva sesión</span>
+      </button>
+
+      <!-- Selector de Tema Claro / Oscuro -->
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label="Cambiar entre tema claro y oscuro"
+        title="Cambiar tema"
+        class="p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors cursor-pointer shadow-2xs"
+      >
+        <!-- Sol (se muestra en modo oscuro) -->
+        <svg id="icon-sun" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+        </svg>
+        <!-- Luna (se muestra en modo claro) -->
+        <svg id="icon-moon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenedor Central de Conversación -->
+  <main id="chat-viewport" class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+    <div class="max-w-3xl mx-auto flex flex-col min-h-full">
+
+      <!-- Estado Inicial Ejecutivo -->
+      <div id="empty-state" class="my-auto py-10 text-center space-y-6">
+        <div class="w-14 h-14 rounded-2xl overflow-hidden mx-auto flex items-center justify-center shadow-sm">
+          <svg class="w-14 h-14" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="64" height="64" rx="16" fill="#18181B"/>
+            <path d="M32 12C22.611 12 15 19.611 15 29V46C15 49.314 17.686 52 21 52H43C46.314 52 49 49.314 49 46V29C49 19.611 41.389 12 32 12Z" fill="#27272A" stroke="#F4F4F5" stroke-width="2.5"/>
+            <path d="M32 25C25.925 25 21 29.925 21 36V48C21 50.209 22.791 52 25 52H39C41.209 52 43 50.209 43 48V36C43 29.925 38.075 25 32 25Z" fill="#FAFAFA"/>
+            <circle cx="26.5" cy="22" r="2.2" fill="#FAFAFA"/>
+            <circle cx="37.5" cy="22" r="2.2" fill="#FAFAFA"/>
+            <path d="M28.5 25.5H35.5L32 30.5L28.5 25.5Z" fill="#F59E0B"/>
+          </svg>
+        </div>
+
+        <div class="space-y-2 max-w-md mx-auto">
+          <h2 class="text-xl sm:text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+            ¿Cómo puedo ayudarte?
+          </h2>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400">
+            Consulta arquitectura de software, resuelve dudas técnicas o personaliza el comportamiento del asistente desde <strong>Ajustes IA</strong>.
+          </p>
+        </div>
+
+        <!-- Sugerencias Rápidas -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 max-w-2xl mx-auto pt-2 text-left">
+          <button
+            type="button"
+            data-prompt="Explica de forma breve las mejores prácticas para escribir código limpio y mantenible en JavaScript."
+            class="suggestion-btn group p-3.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-xs transition-all cursor-pointer"
+          >
+            <p class="text-xs font-semibold text-zinc-800 dark:text-zinc-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+              Buenas prácticas JS
+            </p>
+            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-2">
+              Principios clave de código limpio
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-prompt="¿Cuáles son las diferencias clave entre REST, GraphQL y gRPC en arquitecturas modernas?"
+            class="suggestion-btn group p-3.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-xs transition-all cursor-pointer"
+          >
+            <p class="text-xs font-semibold text-zinc-800 dark:text-zinc-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+              Arquitectura API
+            </p>
+            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-2">
+              Comparativa REST vs GraphQL vs gRPC
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-prompt="Redacta una minuta ejecutiva para una reunión de lanzamiento de proyecto tecnológico."
+            class="suggestion-btn group p-3.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-xs transition-all cursor-pointer"
+          >
+            <p class="text-xs font-semibold text-zinc-800 dark:text-zinc-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+              Gestión & Liderazgo
+            </p>
+            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-2">
+              Minuta ejecutiva de lanzamiento
+            </p>
+          </button>
+        </div>
+      </div>
+
+      <!-- Historial de Mensajes del Chat -->
+      <div id="app" class="space-y-6 pb-4"></div>
+
+    </div>
+  </main>
+
+  <!-- Barra de Entrada (Composer) -->
+  <footer class="shrink-0 p-4 sm:px-6 bg-gradient-to-t from-zinc-50 via-zinc-50 to-transparent dark:from-zinc-950 dark:via-zinc-950">
+    <div class="max-w-3xl mx-auto">
+      <form
+        id="chat-form"
+        class="relative rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm focus-within:border-zinc-400 dark:focus-within:border-zinc-600 focus-within:ring-2 focus-within:ring-zinc-900/5 dark:focus-within:ring-zinc-100/5 transition-all"
+      >
+        <label for="prompt" class="sr-only">¿Cómo puedo ayudarte?</label>
+        <div class="flex items-center gap-2 p-2 sm:p-2.5">
+          <input
+            name="prompt"
+            id="prompt"
+            autocomplete="off"
+            class="w-full bg-transparent px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none"
+            placeholder="Pregunta lo que quieras..."
+          />
+          <button
+            id="submit"
+            type="submit"
+            aria-label="Enviar"
+            class="shrink-0 h-9 w-9 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer shadow-2xs"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+            </svg>
+          </button>
+        </div>
+      </form>
+      <p class="text-[11px] text-center text-zinc-400 dark:text-zinc-500 mt-2">
+        Pingu AI Workspace · Puedes personalizar el rol y la creatividad del modelo en <strong>Ajustes IA</strong>.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Modal Empresarial de Ajustes IA -->
+  <dialog
+    id="settings-dialog"
+    class="m-auto w-[92%] max-w-lg rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-2xl p-0 overflow-hidden"
+  >
+    <form id="settings-form" class="flex flex-col max-h-[88vh]">
+      <!-- Cabecera del Modal -->
+      <div class="px-6 py-4 border-b border-zinc-200/80 dark:border-zinc-800 flex items-center justify-between">
+        <div>
+          <h3 class="text-base font-semibold tracking-tight">Ajustes del Agente IA</h3>
+          <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+            Personaliza el comportamiento y la precisión de las respuestas
+          </p>
+        </div>
+        <button
+          id="close-settings"
+          type="button"
+          aria-label="Cerrar ajustes"
+          class="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Cuerpo del Modal -->
+      <div class="p-6 space-y-6 overflow-y-auto">
+        <!-- Sección 1: System Prompt -->
+        <div class="space-y-3">
+          <div>
+            <label for="system-prompt-input" class="block text-xs font-semibold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
+              System Prompt (Instrucciones del Sistema)
+            </label>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+              Define la <strong>identidad, profesión, tono y reglas</strong> que la IA adoptará antes de responderte. Por ejemplo, puedes indicarle que sea un experto en programación, un traductor o que responda con un formato específico.
+            </p>
+          </div>
+
+          <!-- Perfiles Rápidos -->
+          <div class="space-y-1.5">
+            <span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Perfiles rápidos:</span>
+            <div id="presets-container" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <textarea
+            id="system-prompt-input"
+            rows="4"
+            placeholder="Escribe aquí cómo quieres que actúe la IA..."
+            class="w-full rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950/60 px-3.5 py-2.5 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:border-zinc-400 dark:focus:border-zinc-500 focus:outline-none leading-relaxed resize-y"
+          ></textarea>
+        </div>
+
+        <hr class="border-zinc-200/70 dark:border-zinc-800" />
+
+        <!-- Sección 2: Temperatura -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <label for="temperature-input" class="block text-xs font-semibold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
+              Temperatura (Nivel de Creatividad)
+            </label>
+            <span
+              id="temperature-value"
+              class="px-2.5 py-0.5 rounded-md font-mono text-xs font-semibold bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+            >
+              0.2
+            </span>
+          </div>
+
+          <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            Controla qué tan predecible o creativa es la IA (rango de <strong>0.0 a 1.0</strong>). Valores bajos (como <strong>0.0 - 0.3</strong>) hacen que la IA sea lógica, determinista y precisa (ideal para programación). Valores altos (<strong>0.7 - 1.0</strong>) generan respuestas más creativas y variadas.
+          </p>
+
+          <div class="pt-1 space-y-2">
+            <input
+              id="temperature-input"
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              value="0.2"
+              class="w-full accent-zinc-900 dark:accent-zinc-100 cursor-pointer"
+            />
+            <div class="flex justify-between text-[11px] text-zinc-400 dark:text-zinc-500 font-medium">
+              <span>0.0 · Más preciso (Código)</span>
+              <span>0.5 · Equilibrado</span>
+              <span>1.0 · Más creativo</span>
+            </div>
+          </div>
+
+          <!-- Descripción dinámica según el valor elegido -->
+          <div class="rounded-xl bg-zinc-100/80 dark:bg-zinc-800/60 border border-zinc-200/60 dark:border-zinc-700/60 px-3.5 py-2.5 text-xs text-zinc-600 dark:text-zinc-300">
+            <span id="temperature-desc">Preciso y predecible · Ideal para programación, lógica y respuestas exactas.</span>
+          </div>
+        </div>
+
+        <!-- Aviso de guardado -->
+        <div
+          id="settings-status"
+          class="hidden rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 px-3.5 py-2 text-xs font-medium text-emerald-700 dark:text-emerald-300 text-center"
+        >
+          ✓ Configuración guardada y aplicada
+        </div>
+      </div>
+
+      <!-- Pie del Modal -->
+      <div class="px-6 py-4 border-t border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/60 flex items-center justify-between gap-3">
+        <button
+          id="reset-settings"
+          type="button"
+          class="text-xs font-medium text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors cursor-pointer"
+        >
+          Restaurar por defecto
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button
+            id="cancel-settings"
+            type="button"
+            class="px-3.5 py-2 rounded-xl text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 rounded-xl text-xs font-semibold bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors cursor-pointer shadow-xs"
+          >
+            Guardar ajustes
+          </button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

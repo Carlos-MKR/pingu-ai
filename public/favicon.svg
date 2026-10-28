@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="16" fill="#18181B"/>
+  <!-- Cuerpo exterior del pingüino minimalista -->
+  <path d="M32 12C22.611 12 15 19.611 15 29V46C15 49.314 17.686 52 21 52H43C46.314 52 49 49.314 49 46V29C49 19.611 41.389 12 32 12Z" fill="#27272A" stroke="#F4F4F5" stroke-width="2.5"/>
+  <!-- Pecho blanco -->
+  <path d="M32 25C25.925 25 21 29.925 21 36V48C21 50.209 22.791 52 25 52H39C41.209 52 43 50.209 43 48V36C43 29.925 38.075 25 32 25Z" fill="#FAFAFA"/>
+  <!-- Ojos -->
+  <circle cx="26.5" cy="22" r="2.2" fill="#FAFAFA"/>
+  <circle cx="37.5" cy="22" r="2.2" fill="#FAFAFA"/>
+  <!-- Pico geométrico -->
+  <path d="M28.5 25.5H35.5L32 30.5L28.5 25.5Z" fill="#F59E0B"/>
+</svg>
+

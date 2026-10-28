@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* Habilitar modo oscuro manual mediante la clase .dark en Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Scrollbar minimalista estilo empresarial */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(161, 161, 170, 0.35);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(161, 161, 170, 0.55);
+}
+
+/* Animación suave de entrada de mensajes */
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-enter {
+  animation: messageSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Estilos para el Modal nativo <dialog> */
+dialog::backdrop {
+  background: rgba(9, 9, 11, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+/* ==========================================
+   Tipografía Empresarial para Respuestas IA (Markdown)
+   ========================================== */
+.md-prose {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  word-break: break-word;
+}
+
+.md-prose > *:first-child {
+  margin-top: 0;
+}
+
+.md-prose > *:last-child {
+  margin-bottom: 0;
+}
+
+.md-p {
+  margin: 0.65rem 0;
+}
+
+.md-h1,
+.md-h2,
+.md-h3,
+.md-h4 {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  margin-top: 1.15rem;
+  margin-bottom: 0.45rem;
+}
+
+.md-h1 {
+  font-size: 1.2rem;
+}
+
+.md-h2 {
+  font-size: 1.075rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(161, 161, 170, 0.22);
+}
+
+.md-h3 {
+  font-size: 0.975rem;
+}
+
+.md-h4 {
+  font-size: 0.9rem;
+}
+
+.md-ul,
+.md-ol {
+  margin: 0.6rem 0;
+  padding-left: 1.35rem;
+}
+
+.md-ul {
+  list-style-type: disc;
+}
+
+.md-ol {
+  list-style-type: decimal;
+}
+
+.md-ul li,
+.md-ol li {
+  margin: 0.28rem 0;
+  padding-left: 0.2rem;
+}
+
+.md-blockquote {
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.9rem;
+  border-left: 3px solid #6366f1;
+  background: rgba(99, 102, 241, 0.06);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+}
+
+.md-hr {
+  margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid rgba(161, 161, 170, 0.25);
+}
+
+.md-link {
+  color: #4f46e5;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+}
+
+.dark .md-link {
+  color: #818cf8;
+}
+
+/* Código en línea (`code`) */
+.md-inline-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.375rem;
+  background: rgba(161, 161, 170, 0.18);
+  border: 1px solid rgba(161, 161, 170, 0.25);
+  font-weight: 500;
+}
+
+/* Bloques de código (```lang ... ```) */
+.md-code-block {
+  margin: 0.85rem 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #27272a;
+  background: #09090b;
+  color: #f4f4f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.md-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.85rem;
+  background: #18181b;
+  border-bottom: 1px solid #27272a;
+  font-size: 0.7rem;
+}
+
+.md-code-lang {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a1a1aa;
+  font-weight: 600;
+}
+
+.code-copy-btn {
+  color: #a1a1aa;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.35rem;
+  transition: all 0.15s ease;
+}
+
+.code-copy-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.md-pre {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+/* Tablas Markdown */
+.md-table-wrap {
+  margin: 0.85rem 0;
+  overflow-x: auto;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(161, 161, 170, 0.28);
+}
+
+.md-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  text-align: left;
+}
+
+.md-table th,
+.md-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(161, 161, 170, 0.2);
+}
+
+.md-table th {
+  font-weight: 600;
+  background: rgba(161, 161, 170, 0.1);
+}
+
+.md-table tr:last-child td {
+  border-bottom: none;
+}
