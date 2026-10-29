@@ -30,6 +30,8 @@
 - **Temas claro y oscuro**: Interfaz adaptable con soporte para preferencias del sistema operativo y persistencia en `localStorage`.
 - **Arquitectura modular**: Separación clara de responsabilidades entre configuración, renderizado de interfaz, utilidades de formateo y lógica principal.
 
+![Pingu AI Demo](preview.jpg)
+
 ## Tecnologías
 
 - **Entorno de desarrollo**: Vite
