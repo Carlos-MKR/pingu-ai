@@ -18,6 +18,9 @@ const openRouter = createOpenRouter({
     apiKey: import.meta.env.VITE_OPENROUTER_API_KEY,
 })
 
+// Modelo configurable vía .env (Explora más modelos en: https://openrouter.ai/models)
+const DEFAULT_MODEL = import.meta.env.VITE_OPENROUTER_MODEL || 'nvidia/nemotron-3.5-super-vl:free'
+
 // Referencias del DOM principal
 const form = document.querySelector("#chat-form")
 const app = document.querySelector("#app")
@@ -84,7 +87,7 @@ form.addEventListener('submit', async (e) => {
 
     try {
         const result = streamText({
-            model: openRouter('nvidia/nemotron-3.5-super-vl:free'), // modelo para generar texto
+            model: openRouter(DEFAULT_MODEL), // modelo configurable vía .env con fallback
             prompt, // prompt para generar texto
             // system: "Actúa como un asistente de programación. Responde siempre en español.",
             // system: "Eres un niño de 3 años",

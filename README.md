@@ -8,6 +8,14 @@
   Interfaz web minimalista de chat asistido por inteligencia artificial con streaming en tiempo real, formateo Markdown y configuración dinámica de parámetros del modelo.
 </p>
 
+<p align="center">
+  <a href="https://youtu.be/RYuiaMsoVFo" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.youtube.com/vi/RYuiaMsoVFo/maxresdefault.jpg" alt="Ver video demostración de Pingu AI en YouTube" width="720" />
+  </a>
+  <br />
+  <em>Haz clic en la imagen o <a href="https://youtu.be/RYuiaMsoVFo" target="_blank" rel="noopener noreferrer"><strong>aquí para ver el video demostrativo en YouTube (0:34)</strong></a>.</em>
+</p>
+
 ---
 
 ## Descripción
@@ -48,9 +56,11 @@
    ```
 
 3. **Configurar variables de entorno:**
-   Crea un archivo `.env` en la raíz del proyecto y define tu clave de OpenRouter:
+   Crea un archivo `.env` en la raíz del proyecto (puedes duplicar o renombrar `.env.template`):
    ```env
    VITE_OPENROUTER_API_KEY=tu_api_key_de_openrouter
+   # Opcional (por defecto usa nvidia/nemotron-3.5-super-vl:free). Explora más en https://openrouter.ai/models
+   VITE_OPENROUTER_MODEL=nvidia/nemotron-3.5-super-vl:free
    ```
 
 4. **Iniciar el servidor de desarrollo:**
